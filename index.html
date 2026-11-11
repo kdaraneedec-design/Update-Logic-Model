@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>รายงานการดำเนินการด้าน Logic Model ฝ่ายการพยาบาล โรงพยาบาลศิริราช</title>
+  
+  <!-- Typography & Libraries -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root {
+      --primary-navy: #0f172a;
+      --secondary-slate: #1e293b;
+      --accent-blue: #0284c7;
+      --accent-cyan: #0369a1;
+      --bg-canvas: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-subtle: #e2e8f0;
+      --success-green: #10b981;
+      --warning-amber: #f59e0b;
+      --danger-rose: #ef4444;
+      --info-sky: #0ea5e9;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      line-height: 1.6;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Prompt', sans-serif;
+    }
+
+    /* 1. Executive Header Banner */
+    .executive-header-banner {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0369a1 100%);
+      color: #ffffff;
+      padding: 2.25rem 2.5rem 1.25rem 2.5rem;
+      position: relative;
+      border-bottom: 3px solid #38bdf8;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .header-content-wrapper {
+      max-width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .header-title-box h1 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+      color: #f8fafc;
+    }
+
+    .header-title-box p {
+      font-size: 1rem;
+      color: #94a3b8;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .header-meta-pill {
+      background: rgba(255, 255, 255, 0.12);
+      padding: 0.25rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Executive Tab Navigation */
+    .nav-tabs-wrapper {
+      display: flex;
+      gap: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      color: #cbd5e1;
+      padding: 0.85rem 1.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 10px 10px 0 0;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      font-family: 'Prompt', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+    }
+
+    .tab-btn.active {
+      background: #ffffff;
+      color: var(--primary-navy);
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    }
+
+    .tab-btn .badge-pill {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 9999px;
+      background: rgba(15, 23, 42, 0.12);
+      color: inherit;
+    }
+
+    .tab-btn.active .badge-pill {
+      background: #0284c7;
+      color: #ffffff;
+    }
+
+    /* Main Container */
+    .dashboard-container {
+      width: 100%;
+      padding: 2rem 2.5rem;
+      flex: 1;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.25s ease-in-out forwards;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Action Control Toolbar */
+    .control-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .toolbar-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--secondary-slate);
+    }
+
+    .tooltip-info {
+      position: relative;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .tooltip-info .tooltip-text {
+      visibility: hidden;
+      width: 330px;
+      background-color: #1e293b;
+      color: #fff;
+      text-align: left;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      position: absolute;
+      z-index: 50;
+      top: 130%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.2s;
+      font-size: 0.825rem;
+      line-height: 1.4;
+      font-family: 'Sarabun', sans-serif;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .tooltip-info:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1.15rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+      font-family: 'Prompt', sans-serif;
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: #334155;
+    }
+
+    .btn-outline:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #0369a1;
+    }
+
+    .btn-reset {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+      color: #64748b;
+    }
+
+    .btn-reset:hover {
+      background: #fee2e2;
+      color: #b91c1c;
+      border-color: #fca5a5;
+    }
+
+    /* Filter Bar */
+    .filter-panel {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .filter-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 0.75rem;
+    }
+
+    .filter-heading {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--secondary-slate);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .filter-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .filter-item label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    .filter-select {
+      padding: 0.6rem 0.9rem;
+      font-size: 0.9rem;
+      font-family: 'Sarabun', sans-serif;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      background-color: #f8fafc;
+      color: #1e293b;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .filter-select:focus {
+      border-color: var(--accent-blue);
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+
+    /* 15% Report Card Calculation Principle Guide Banner */
+    .threshold-guide-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: #166534;
+      margin-bottom: 1.5rem;
+    }
+
+    .threshold-pills {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .threshold-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+
+    .pill-green { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+    .pill-yellow { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .pill-red { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+
+    /* Summary Stat Counters */
+    .summary-counter-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .counter-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .counter-card .label { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
+    .counter-card .value { font-size: 1.75rem; font-weight: 700; font-family: 'Prompt', sans-serif; line-height: 1.2; margin: 0.2rem 0; }
+    .counter-card .subtext { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* REPORT CARDS GRID */
+    .report-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .report-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1.5px solid var(--border-subtle);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden;
+    }
+
+    .report-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Traffic Light Border Accents */
+    .report-card.status-green {
+      border-left: 6px solid var(--success-green);
+      background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
+    }
+
+    .report-card.status-yellow {
+      border-left: 6px solid var(--warning-amber);
+      background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);
+    }
+
+    .report-card.status-red {
+      border-left: 6px solid var(--danger-rose);
+      background: linear-gradient(180deg, #ffffff 0%, #fff1f2 100%);
+    }
+
+    .report-card.status-pending {
+      border-left: 6px solid #94a3b8;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    .card-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.65rem;
+      gap: 0.5rem;
+    }
+
+    .card-logic-id {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #0369a1;
+      background: #e0f2fe;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      font-family: 'Prompt', sans-serif;
+    }
+
+    .card-owner-badge {
+      font-size: 0.75rem;
+      color: #475569;
+      background: #f1f5f9;
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .card-process-badge {
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-bottom: 0.35rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .card-kpi-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--secondary-slate);
+      line-height: 1.45;
+      margin-bottom: 1.25rem;
+      min-height: 2.9rem;
+    }
+
+    .card-metric-block {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-metric-actual {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-actual-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .card-actual-value {
+      font-size: 1.85rem;
+      font-weight: 700;
+      font-family: 'Prompt', sans-serif;
+      line-height: 1.1;
+      margin-top: 0.2rem;
+    }
+
+    .status-green .card-actual-value { color: #15803d; }
+    .status-yellow .card-actual-value { color: #b45309; }
+    .status-red .card-actual-value { color: #b91c1c; }
+    .status-pending .card-actual-value { color: #64748b; }
+
+    .card-metric-target {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .card-target-badge {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .card-target-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .card-band-breakdown {
+      font-size: 0.75rem;
+      color: #475569;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 6px;
+      padding: 0.5rem 0.65rem;
+      margin-bottom: 0.75rem;
+      border: 1px dashed #cbd5e1;
+      line-height: 1.4;
+    }
+
+    .card-footer-status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.5rem;
+      border-top: 1px solid #f1f5f9;
+      font-size: 0.75rem;
+    }
+
+    .traffic-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+
+    .pill-status-green { background: #dcfce7; color: #166534; }
+    .pill-status-yellow { background: #fef3c7; color: #92400e; }
+    .pill-status-red { background: #fee2e2; color: #991b1b; }
+    .pill-status-pending { background: #f1f5f9; color: #64748b; }
+
+    /* Charts Tab 1 */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 1200px) {
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .chart-container-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.25rem;
+    }
+
+    .chart-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--secondary-slate);
+    }
+
+    .chart-subtitle {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+    }
+
+    .chart-canvas-wrapper {
+      position: relative;
+      flex: 1;
+      min-height: 290px;
+    }
+
+    /* Recommendations & Workshop Benefits */
+    .strategic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .recommendation-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .rec-number {
+      width: 32px;
+      height: 32px;
+      background: #0284c7;
+      color: #fff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      font-family: 'Prompt', sans-serif;
+    }
+
+    .rec-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--secondary-slate);
+      margin-bottom: 0.5rem;
+    }
+
+    .rec-body {
+      font-size: 0.875rem;
+      color: #475569;
+      line-height: 1.55;
+    }
+
+    .workshop-benefits-card {
+      background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+      border: 1px solid #bbf7d0;
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .workshop-benefits-card h3 {
+      font-size: 1.25rem;
+      color: #065f46;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .benefits-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .benefit-item {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 1.15rem;
+      border-radius: 8px;
+      border-left: 3px solid #10b981;
+    }
+
+    .benefit-item h4 {
+      font-size: 0.95rem;
+      color: #1e293b;
+      margin-bottom: 0.35rem;
+    }
+
+    .benefit-item p {
+      font-size: 0.85rem;
+      color: #475569;
+    }
+
+    /* Tab 2 Styles (Monitoring) */
+    .table-section-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    table.executive-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.875rem;
+    }
+
+    table.executive-table th {
+      background: #f1f5f9;
+      color: #334155;
+      font-weight: 600;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid #cbd5e1;
+      white-space: nowrap;
+      font-family: 'Prompt', sans-serif;
+    }
+
+    table.executive-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: #334155;
+      vertical-align: middle;
+    }
+
+    table.executive-table tbody tr:hover {
+      background: #f8fafc;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .badge-ontime { background: #dcfce7; color: #15803d; }
+    .badge-late { background: #fee2e2; color: #b91c1c; }
+    .badge-overdue { background: #7f1d1d; color: #fef2f2; }
+    .badge-duesoon { background: #fef3c7; color: #b45309; }
+    .badge-notdue { background: #e0f2fe; color: #0369a1; }
+
+    /* 6. Executive Footer Banner */
+    .report-executive-footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 1.5rem 2.5rem;
+      font-size: 0.85rem;
+      text-align: center;
+      border-top: 1px solid #334155;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .report-executive-footer span {
+      color: #cbd5e1;
+      font-weight: 500;
+    }
+
+    /* Toast Notification */
+    .toast-notification {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 0.9rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow-lg);
+      border-left: 4px solid var(--success-green);
+      font-size: 0.875rem;
+      font-family: 'Sarabun', sans-serif;
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .toast-notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast-notification">
+    ✅ ประมวลผลข้อมูลสำเร็จ! คำนวณสถิติและ Report Card ใหม่เรียบร้อยแล้ว
+  </div>
+
+  <!-- 1. Executive Title Header Banner with 2 Tabs -->
+  <header class="executive-header-banner">
+    <div class="header-content-wrapper">
+      <div class="header-title-box">
+        <h1>1. การดำเนินการด้าน logic model 2. ผลลัพธ์การดำเนินการ ฝ่ายการพยาบาล โรงพยาบาลศิริราช</h1>
+        <p>
+          <span>คณะแพทยศาสตร์ศิริราชพยาบาล มหาวิทยาลัยมหิดล</span>
+          <span>•</span>
+          <span>วันที่ประเมินผล: พฤศจิกายน 2569</span>
+          <span class="header-meta-pill">ระดับยุทธศาสตร์องค์กร (Executive Tier)</span>
+        </p>
+      </div>
+      <div>
+        <span class="header-meta-pill" style="background: rgba(14, 165, 233, 0.25); border-color: #38bdf8;">
+          รอบการติดตาม: ประจำปีงบประมาณ 2568 - 2569
+        </span>
+      </div>
+    </div>
+
+    <!-- 2 Navigation Tabs -->
+    <nav class="nav-tabs-wrapper">
+      <button class="tab-btn active" onclick="switchExecutiveTab('tab1', this)">
+        <span>📊 Tab 1. ผลลัพธ์การดำเนินการด้าน Logic Model</span>
+        <span class="badge-pill">Outcome Report Cards</span>
+      </button>
+      <button class="tab-btn" onclick="switchExecutiveTab('tab2', this)">
+        <span>⏱️ Tab 2. การติดตามการดำเนินการด้าน Logic Model</span>
+        <span class="badge-pill">Governance & Monitoring</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Main Container -->
+  <main class="dashboard-container">
+
+    <!-- Action Control Toolbar -->
+    <section class="control-toolbar">
+      <div class="toolbar-left">
+        <span class="toolbar-title">ระบบบริหารจัดการชุดข้อมูลดิบ (In-Browser Statistical Engine)</span>
+        <div class="tooltip-info">ℹ️
+          <span class="tooltip-text">การนำเข้าข้อมูลดิบจะคำนวณสถิติ กราฟ และการ์ดตัวเลขใหม่แบบเรียลไทม์ หากต้องการกลับสู่ชุดข้อมูลและบทวิเคราะห์เริ่มต้น ให้กดปุ่ม '🔄 รีเซ็ตข้อมูล'</span>
+        </div>
+      </div>
+      <div class="toolbar-actions">
+        <button class="btn btn-outline" onclick="downloadSampleCSV()">📥 ดาวน์โหลดข้อมูลดิบตัวอย่าง (.csv)</button>
+        <button class="btn btn-primary" onclick="document.getElementById('csvFileInput').click()">📤 นำเข้าข้อมูลดิบใหม่ (.csv)</button>
+        <button class="btn btn-reset" onclick="resetToBaseline()">🔄 รีเซ็ตข้อมูล</button>
+        <input type="file" id="csvFileInput" accept=".csv" style="display: none;" onchange="handleCSVUpload(event)">
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 1: ผลลัพธ์การดำเนินการด้าน Logic model (Report Cards) -->
+    <!-- ======================================================== -->
+    <div id="tab1" class="tab-content active">
+
+      <!-- FILTER PANEL 3 DIMENSIONS -->
+      <section class="filter-panel">
+        <div class="filter-panel-header">
+          <div class="filter-heading">
+            <span>⚙️ ตัวกรองการแสดงผลลัพธ์เชิงยุทธศาสตร์ (Strategic Outcome Filters)</span>
+          </div>
+          <span style="font-size: 0.85rem; color: var(--text-muted);" id="filterCounterText">
+            กำลังแสดง 18 ตัวชี้วัด | ข้อมูลปี 2568
+          </span>
+        </div>
+
+        <div class="filter-grid">
+          <!-- Filter 1: Core Process -->
+          <div class="filter-item">
+            <label for="filterCoreProcess">1. กระบวนการหลัก (Core Process)</label>
+            <select id="filterCoreProcess" class="filter-select" onchange="onCoreProcessChange()">
+              <option value="ALL">-- แสดงทั้งหมดทุกกระบวนการหลัก --</option>
+              <option value="1.การวางแผน">1. การวางแผน (Core 1)</option>
+              <option value="2. การกำหนดนโยบาย">2. การกำหนดนโยบาย นิเทศ กำกับติดตาม (Core 2)</option>
+              <option value="3. การบริหารจัดการสู่ความเป็นเลิศ">3. การบริหารจัดการสู่ความเป็นเลิศ (Core 3)</option>
+              <option value="4. การบริหารจัดการสิ่งสนับสนุน">4. การบริหารจัดการสิ่งสนับสนุน (Core 4)</option>
+              <option value="5. การวิเคราะห์">5. การวิเคราะห์ ประเมินผล และพัฒนาต่อเนื่อง (Core 5)</option>
+            </select>
+          </div>
+
+          <!-- Filter 2: Specific KPI -->
+          <div class="filter-item">
+            <label for="filterKPI">2. ตัวชี้วัดผลลัพธ์ (Outcome KPI)</label>
+            <select id="filterKPI" class="filter-select" onchange="applyTab1Filters()">
+              <option value="ALL">-- แสดงทุกตัวชี้วัดผลลัพธ์ --</option>
+              <!-- Dynamically populated -->
+            </select>
+          </div>
+
+          <!-- Filter 3: Period / Year -->
+          <div class="filter-item">
+            <label for="filterYear">3. ช่วงเวลาการรายงานผลลัพธ์ (รอบปี พ.ศ.)</label>
+            <select id="filterYear" class="filter-select" onchange="applyTab1Filters()">
+              <option value="2568" selected>ปี 2568 (ปีประเมินผลล่าสุด)</option>
+              <option value="2567">ปี 2567</option>
+              <option value="2566">ปี 2566</option>
+              <option value="2565">ปี 2565</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- 15% Threshold Principle Guide Banner -->
+      <div class="threshold-guide-box">
+        <div>
+          <strong>📌 หลักการประเมิน Report Card (เกณฑ์ช่วงคลาดเคลื่อน 15% ของค่าเป้าหมาย):</strong>
+          <span> สีสถานะจะคำนวณจากค่าเป้าหมายตามหลักการบริหารผลการปฏิบัติงาน</span>
+        </div>
+        <div class="threshold-pills">
+          <span class="threshold-pill pill-green">🟢 สีเขียว: ผลลัพธ์ ≥ ค่าเป้าหมาย (On Target)</span>
+          <span class="threshold-pill pill-yellow">🟡 สีเหลือง: ผลลัพธ์ต่ำกว่าเป้าหมายไม่เกิน 15% (Near Target)</span>
+          <span class="threshold-pill pill-red">🔴 สีแดง: ผลลัพธ์ต่ำกว่าเป้าหมายเกิน 15% (Off Target)</span>
+        </div>
+      </div>
+
+      <!-- Real-time Status Counters -->
+      <section class="summary-counter-bar">
+        <div class="counter-card" style="border-left: 4px solid #0284c7;">
+          <span class="label">ตัวชี้วัดที่กำลังแสดง</span>
+          <span class="value" id="cntTotal">18</span>
+          <span class="subtext">ตามเงื่อนไขตัวกรองปัจจุบัน</span>
+        </div>
+        <div class="counter-card" style="border-left: 4px solid var(--success-green);">
+          <span class="label">🟢 บรรลุตามเป้าหมาย (Green)</span>
+          <span class="value" style="color: #15803d;" id="cntGreen">12</span>
+          <span class="subtext" id="pctGreen">66.7% ของตัวชี้วัดทั้งหมด</span>
+        </div>
+        <div class="counter-card" style="border-left: 4px solid var(--warning-amber);">
+          <span class="label">🟡 ระดับเฝ้าระวัง (Yellow 15%)</span>
+          <span class="value" style="color: #b45309;" id="cntYellow">2</span>
+          <span class="subtext" id="pctYellow">11.1% ของตัวชี้วัดทั้งหมด</span>
+        </div>
+        <div class="counter-card" style="border-left: 4px solid var(--danger-rose);">
+          <span class="label">🔴 ต่ำกว่าเกณฑ์วิกฤต (Red)</span>
+          <span class="value" style="color: #b91c1c;" id="cntRed">3</span>
+          <span class="subtext" id="pctRed">16.7% ต้องมีแผนเร่งรัด</span>
+        </div>
+      </section>
+
+      <!-- REPORT CARDS CONTAINER -->
+      <div class="report-card-grid" id="reportCardGrid">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+
+      <!-- Historical Charts Tab 1 -->
+      <section class="charts-grid">
+        <div class="chart-container-card">
+          <div class="chart-header">
+            <div>
+              <h3 class="chart-title">แนวโน้มทุนมนุษย์และประสบการณ์บุคลากร (People Experience & Retention)</h3>
+              <span class="chart-subtitle">เปรียบเทียบปี 2565 - 2568 พร้อมพยากรณ์ระดับความผูกพันและคงอยู่ปี 2569</span>
+            </div>
+          </div>
+          <div class="chart-canvas-wrapper">
+            <canvas id="hrTrendChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-container-card">
+          <div class="chart-header">
+            <div>
+              <h3 class="chart-title">ผลลัพธ์คุณภาพและความปลอดภัยผู้ป่วย (Clinical Quality & Safety)</h3>
+              <span class="chart-subtitle">แนวโน้มอัตราความคลาดเคลื่อนทางยา แผลกดทับ และการพลัดตกหกล้ม</span>
+            </div>
+          </div>
+          <div class="chart-canvas-wrapper">
+            <canvas id="safetyTrendChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 Strategic Recommendations -->
+      <h2 class="summary-heading" style="margin-top: 1rem;">🚀 บทสรุปและข้อเสนอแนะเชิงยุทธศาสตร์ 4 ข้อ (Strategic Recommendations)</h2>
+      <section class="strategic-grid">
+        <div class="recommendation-card">
+          <div class="rec-number">01</div>
+          <h4 class="rec-title">สถาปนาระบบเชื่อมโยงข้อมูลอัตโนมัติสำหรับตัวชี้วัดคลินิก</h4>
+          <p class="rec-body">
+            จัดสรรบทบาทผู้รับผิดชอบข้อมูล (Data Owner) ที่ชัดเจนสำหรับ Safety Process Indicators โดยเร่งบูรณาการข้อมูลเข้ากับระบบเวชระเบียนอิเล็กทรอนิกส์ (EHR) เพื่อลดภาระการบันทึกด้วยมือและแก้ไขปัญหารายงานล่าช้า
+          </p>
+        </div>
+
+        <div class="recommendation-card">
+          <div class="rec-number">02</div>
+          <h4 class="rec-title">ปรับปรุงกลไกติดตามผลแบบ Early-Warning สำหรับตัวชี้วัดที่ล่าช้า</h4>
+          <p class="rec-body">
+            ยกระดับระบบแจ้งเตือนก่อนครบกำหนด 15 วันและ 7 วัน ให้มีระบบ Escalation Alert ตรงถึงรองหัวหน้าฝ่ายฯ เมื่อตัวชี้วัดมีสถานะ Overdue เกินกว่า 30 วัน เพื่อให้การขับเคลื่อนตัวชี้วัดยุทธศาสตร์ไม่สะดุด
+          </p>
+        </div>
+
+        <div class="recommendation-card">
+          <div class="rec-number">03</div>
+          <h4 class="rec-title">ยกระดับศักยภาพการดูแลผู้ป่วยเฉพาะโรคและการจัดการความรู้</h4>
+          <p class="rec-body">
+            ผลลัพธ์การพยาบาลผู้ป่วยเฉพาะโรคอยู่ที่ 60.72% ซึ่งต่ำกว่าเกณฑ์ควบคุมสีแดง (&lt;63.75%) ควรเร่งผลักดันการจัดทำ Clinical Nursing Practice Guidelines (CNPG) ในกลุ่มโรคซับซ้อนให้ครอบคลุมทุกหอผู้ป่วย
+          </p>
+        </div>
+
+        <div class="recommendation-card">
+          <div class="rec-number">04</div>
+          <h4 class="rec-title">ส่งเสริมสภาพแวดล้อมเชิงบวกและรักษาเสถียรภาพของอัตรากำลังคน</h4>
+          <p class="rec-body">
+            ต่อยอดความสำเร็จของอัตราการลาออกที่ลดต่ำลง (6.56%) และอัตราความผูกพัน 80.8% (เกณฑ์สีเขียว) ด้วยโครงการพัฒนาผู้นำทางการพยาบาลรุ่นใหม่ (High-Potential Talent) และสร้างวัฒนธรรมความปลอดภัยที่ยั่งยืน
+          </p>
+        </div>
+      </section>
+
+      <!-- Workshop Benefits -->
+      <section class="workshop-benefits-card">
+        <h3>🌟 ประโยชน์ที่ได้รับจาก Workshop การพัฒนาระบบ Logic Model ฝ่ายการพยาบาล</h3>
+        <div class="benefits-list">
+          <div class="benefit-item">
+            <h4>การเชื่อมโยงยุทธศาสตร์สู่การปฏิบัติอย่างไร้รอยต่อ (Strategic Alignment)</h4>
+            <p>ช่วยให้บุคลากรทุกระดับมองเห็นภาพเดียวกันว่ากิจกรรมกระบวนการพยาบาลหน้างาน ส่งผลลัพธ์โดยตรงต่อเป้าหมายความปลอดภัยของผู้ป่วยและความเป็นเลิศของโรงพยาบาลอย่างไร</p>
+          </div>
+          <div class="benefit-item">
+            <h4>การสร้างวัฒนธรรมความรับผิดชอบร่วมกัน (Accountability & Ownership)</h4>
+            <p>เกิดการกำหนดผู้รับผิดชอบระดับกระบวนการ (Core Process Owner) และผู้จัดเก็บข้อมูล (Data Owner) ที่ชัดเจน ลดความซ้ำซ้อนและป้องกันช่องว่างในการส่งมอบงาน</p>
+          </div>
+          <div class="benefit-item">
+            <h4>การบริหารจัดการเชิงรุกด้วยข้อมูลเชิงประจักษ์ (Data-driven Agility)</h4>
+            <p>เปลี่ยนผ่านจากการรายงานผลย้อนหลังรายปี สู่การติดตามตัวชี้วัดแบบ Real-time Dashboard ทำให้ฝ่ายบริหารมองเห็นจุดเสี่ยงและสั่งการแก้ไขได้อย่างแม่นยำ</p>
+          </div>
+          <div class="benefit-item">
+            <h4>การพัฒนาคุณภาพอย่างต่อเนื่องสู่สากล (Continuous Quality Mastery)</h4>
+            <p>ยกระดับมาตรฐานตัวชี้วัดเปรียบเทียบกับระดับชาติและนานาชาติ ขับเคลื่อนวัฒนธรรมการใช้นวัตกรรม วิจัย และ Best Practice ในการพัฒนาการพยาบาลอย่างยั่งยืน</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+
+    <!-- ======================================================== -->
+    <!-- TAB 2: การติดตามการดำเนินการด้าน Logic Model (Monitoring)-->
+    <!-- ======================================================== -->
+    <div id="tab2" class="tab-content">
+
+      <!-- Dynamic Owner Filter Bar -->
+      <section class="filter-panel" style="padding: 1.25rem 1.5rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <span style="font-size: 0.95rem; font-weight: 600; color: var(--secondary-slate);">
+              🔍 กรองการติดตามตาม Owner (ผู้รับผิดชอบ):
+            </span>
+            <select id="ownerFilterSelect" class="filter-select" onchange="applyOwnerFilter()" style="min-width: 260px;">
+              <option value="ALL">-- แสดงทั้งหมด (All Owners) --</option>
+              <option value="รองบริหาร">รองบริหาร</option>
+              <option value="รองบริการ">รองบริการ</option>
+              <option value="รองวิชาการ">รองวิชาการ</option>
+              <option value="ผช.RM">ผช.RM (ความปลอดภัย/ความเสี่ยง)</option>
+              <option value="หนง.พัฒนาคุณภาพฯ">หนง.พัฒนาคุณภาพฯ</option>
+              <option value="หนง.วิจัยและสารสนเทศ">หนง.วิจัยและสารสนเทศ</option>
+              <option value="หนง.HR">หนง.HR (การบริหารทรัพยากรบุคคล)</option>
+              <option value="หัวหน้าฝ่ายฯ">หัวหน้าฝ่ายการพยาบาล</option>
+              <option value="UNASSIGNED">⚠️ ตัวชี้วัดที่ยังไม่ระบุ Owner (Unassigned)</option>
+            </select>
+          </div>
+          <div style="font-size: 0.85rem; color: var(--text-muted);" id="filterResultNotice">
+            แสดงข้อมูล 19 รายการ จากทั้งหมด 19 รายการในรอบปฏิทิน 2569
+          </div>
+        </div>
+      </section>
+
+      <!-- Tracking Metric Deck for Filtered Owner -->
+      <section class="summary-counter-bar">
+        <div class="counter-card" style="border-left: 4px solid #6366f1;">
+          <span class="label">จำนวนรายการติดตามตามปฏิทิน</span>
+          <span class="value" id="trackCardTotal">19 รายการ</span>
+          <span class="subtext" id="trackCardTotalSub">ครอบคลุมทั้งตัวชี้วัด KPI และ PI</span>
+        </div>
+
+        <div class="counter-card" style="border-left: 4px solid var(--success-green);">
+          <span class="label">ส่งตรงเวลา (On Time Rate)</span>
+          <span class="value" style="color: #15803d;" id="trackCardOnTime">2 รายการ (10.5%)</span>
+          <span class="subtext">ส่งรายงานตรงตามกำหนดเวลา</span>
+        </div>
+
+        <div class="counter-card" style="border-left: 4px solid var(--danger-rose);">
+          <span class="label">ค้างส่งเกินกำหนด (Overdue Rate)</span>
+          <span class="value" style="color: #b91c1c;" id="trackCardOverdue">12 รายการ (63.2%)</span>
+          <span class="subtext">เกินกำหนดรอบรายงานปัจจุบัน</span>
+        </div>
+
+        <div class="counter-card" style="border-left: 4px solid var(--warning-amber);">
+          <span class="label">ส่งล่าช้า / ใกล้ถึงกำหนด</span>
+          <span class="value" style="color: #b45309;" id="trackCardLate">3 รายการ (15.8%)</span>
+          <span class="subtext">Late 2 รายการ / Due Soon 1 รายการ</span>
+        </div>
+      </section>
+
+      <!-- Charts Tab 2 -->
+      <section class="charts-grid">
+        <div class="chart-container-card">
+          <div class="chart-header">
+            <div>
+              <h3 class="chart-title">สัดส่วนสถานะความทันเวลาของการส่งมอบรายงาน (Timeliness Distribution)</h3>
+              <span class="chart-subtitle">วิเคราะห์การกระจายตัวของสถานะส่งข้อมูลตาม Owner ที่เลือก</span>
+            </div>
+          </div>
+          <div class="chart-canvas-wrapper">
+            <canvas id="governanceStatusChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-container-card">
+          <div class="chart-header">
+            <div>
+              <h3 class="chart-title">ภาระงานและการส่งมอบจำแนกตามรายหน่วยงาน (Workload & Compliance)</h3>
+              <span class="chart-subtitle">จำนวนตัวชี้วัดที่รับผิดชอบและอัตราการส่งมอบตรงเวลา</span>
+            </div>
+          </div>
+          <div class="chart-canvas-wrapper">
+            <canvas id="ownerWorkloadChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filtered Tracking Schedule Log Table -->
+      <section class="table-section-card">
+        <div class="table-header-row">
+          <div>
+            <h3 class="table-title">บันทึกสถานะการติดตามการนำเข้าข้อมูลรายตัวชี้วัด (Detailed Tracking Log)</h3>
+            <p style="font-size: 0.825rem; color: var(--text-muted);">
+              แสดงรายการติดตามตามรอบปฏิทิน Logic Model ประจำปี 2569
+            </p>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="executive-table">
+            <thead>
+              <tr>
+                <th>Schedule ID</th>
+                <th>รหัส Logic</th>
+                <th>ประเภท</th>
+                <th>ชื่อตัวชี้วัด</th>
+                <th>รอบความถี่</th>
+                <th>รอบข้อมูล</th>
+                <th>วันครบกำหนด (Due Date)</th>
+                <th>วันที่ส่งจริง</th>
+                <th>สถานะความทันเวลา</th>
+                <th>Owner (ผู้รับผิดชอบ)</th>
+              </tr>
+            </thead>
+            <tbody id="filteredSubmissionTableBody">
+              <!-- Rendered dynamically based on Owner Filter -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Governance Gap Alert Callout -->
+      <section class="executive-summary-panel" style="border-left: 4px solid var(--danger-rose);">
+        <h3 style="font-size: 1.1rem; color: #b91c1c; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+          🚨 ข้อสังเกตเชิงระบบ: ช่องว่างการกำกับดูแลข้อมูล (Data Governance Gap Analysis)
+        </h3>
+        <p style="font-size: 0.9rem; color: #475569; line-height: 1.6;">
+          จากการตรวจทานโครงสร้าง Logic Model พบว่าตัวชี้วัดกระบวนการด้านความปลอดภัยทางคลินิก (Clinical Safety Process Indicators: PI 4 ถึง PI 11) ได้แก่ อัตราความคลาดเคลื่อนทางยา, อุบัติการณ์ให้เลือดผิด, การระบุตัวผู้ป่วย, แผลกดทับ, การพลัดตกหกล้ม, และ Sharp Injury <strong>ยังไม่มีการระบุชื่อ Owner เป็นรายบุคคลหรือหน่วยงานหลักในระบบจัดเก็บข้อมูล</strong> ส่งผลให้อัตรา Overdue สูงขึ้น จึงขอเสนอให้ฝ่ายการพยาบาลมอบหมายผู้รับผิดชอบระดับหัวหน้างานและเชื่อมต่อระบบดึงข้อมูลจาก EHR โดยเร็ว
+        </p>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- 6. Executive Footer Banner -->
+  <footer class="report-executive-footer">
+    <span>ผู้จัดทำ ดารณี เดชะ (พฤศจิกายน 2569)</span> | <span>สถานะเอกสาร: เอกสารฉบับสมบูรณ์ (Official Executive Deliverable) ผ่านการรับรองโดยมนุษย์ (Human-in-the-Loop Approved)</span>
+  </footer>
+
+  <!-- Script: Engine, Logic Model Calculations, 15% Rule, Charts -->
+  <script>
+    // Master KPI Database for Tab 1
+    const masterKPIData = [
+      {
+        id: "LMKPI001",
+        kpiNo: "KPI 1",
+        process: "1.การวางแผน",
+        subProcess: "1.การวางแผน",
+        name: "ร้อยละความสำเร็จของการนำแผนงานลงสู่การปฏิบัติ",
+        targetRaw: ">80%",
+        targetVal: 80,
+        direction: "higher_better",
+        unit: "%",
+        history: { 2565: null, 2566: null, 2567: null, 2568: 75.0 },
+        owner: "รองบริหาร"
+      },
+      {
+        id: "LMKPI002",
+        kpiNo: "KPI 2",
+        process: "2. การกำหนดนโยบาย",
+        subProcess: "2.1 จริยธรรมและมาตรฐานวิชาชีพ",
+        name: "จำนวนบุคลากรทางการพยาบาลถูกร้องเรียนเสี่ยงต่อการฟ้องร้อง",
+        targetRaw: "0 คน",
+        targetVal: 0,
+        direction: "exact_or_lower",
+        unit: "คน",
+        history: { 2565: null, 2566: null, 2567: null, 2568: 0 },
+        owner: "ผช.RM"
+      },
+      {
+        id: "LMKPI003a",
+        kpiNo: "KPI 3 (IPD)",
+        process: "2. การกำหนดนโยบาย",
+        subProcess: "2.2 การบริการทางการพยาบาล",
+        name: "อัตราความพึงพอใจระดับดีเยี่ยมต่อการบริการพยาบาล (IPD)",
+        targetRaw: "≥80%",
+        targetVal: 80,
+        direction: "higher_better",
+        unit: "%",
+        history: { 2565: 82.46, 2566: 86.67, 2567: 86.56, 2568: 87.38 },
+        owner: "รองบริการ"
+      },
+      {
+        id: "LMKPI003b",
+        kpiNo: "KPI 3 (OPD)",
+        process: "2. การกำหนดนโยบาย",
+        subProcess: "2.2 การบริการทางการพยาบาล",
+        name: "อัตราความพึงพอใจระดับดีเยี่ยมต่อการบริการพยาบาล (OPD)",
+        targetRaw: "≥70%",
+        targetVal: 70,
+        direction: "higher_better",
+        unit: "%",
+        history: { 2565: 66.90, 2566: 70.82, 2567: 75.52, 2568: 75.57 },
+        owner: "รองบริการ"
+      },
+      {
+        id: "LMKPI004",
+        kpiNo: "KPI 4",
+        process: "2. การกำหนดนโยบาย",
+        subProcess: "2.3 ความปลอดภัยและการบริหารความเสี่ยง",
+        name: "อัตราการบรรลุตามเป้าหมายของ 3 P safety goals (8 PIs)",
+        targetRaw: "≥75%",
+        targetVal: 75,
+        direction: "higher_better",
+        unit: "%",
+        history: { 2565: null, 2566: null, 2567: null, 2568: 50.0 },
+        owner: "ผช.RM"
+      },
+      {
+        id: "LMKPI005",
+        kpiNo: "KPI 5",
+        process: "2. การกำหนดนโยบาย",
+        subProcess: "2.3 ความปลอดภัยและการบริหารความเสี่ยง",
+        name: "ผลสำรวจวัฒนธรรมความปลอดภัย (Safety Culture Survey)",
+        targetRaw: "≥80%",
+        targetVal: 80,
+        direction: "higher_better",
+        unit: "%",
+        history: { 2565: null, 2566: 87.0, 2567: null, 2568: "รอวิเคราะห์" },
+        owner: "หนง.พัฒนาคุณภาพฯ"
+      },
+      {
+        id: "LMKPI006",
+        kpiNo: "KPI 6",
+        process: "3. การบริหารจัดการสู่ความเป็นเลิศ",
+        subProcess: "3.1 การบริการทางการพยาบาลเฉพาะโรค",
+        name: "ร้อยละผลลัพธ์การพยาบาลผู้ป่วยเฉพาะโรค เทียบเคียงมาตรฐาน",
+        targetRaw: "≥75%",
+        targetVal: 75,
+        direction: "higher_better",
+        unit: "%",
+        history: { 2565: 63.64, 2566: 75.00, 2567: 79.17, 2568: 60.72 },
+        owner: "หนง.พัฒนาคุณภาพฯ"
+      },
+      {
+        id: "LMKPI007",
+        kpiNo: "KPI 7",
+        process: "3. การบริหารจัดการสู่ความเป็นเลิศ",
+        subProcess: "3.2 การบริหารคุณภาพและการจัดการความรู้",
+        name: "อัตราความสำเร็จในการนำ Best Practice ไปใช้จริง",
+        targetRaw: ">1 เรื่อง/ปี",
+        targetVal: 1,
+        direction: "higher_better",
+        unit: "เรื่อง",
+        history: { 2565: null, 2566: null, 2567: null, 2568: 2 },
+        owner: "หนง.พัฒนาคุณภาพฯ"
+      },
+      {
+        id: "LMKPI008",
+        kpiNo: "KPI 8",
+        process: "3. การบริหารจัดการสู่ความเป็นเลิศ",
+        subProcess: "3.3 วิจัยและนวัตกรรม",
+        name: "จำนวนงานวิจัยตีพิมพ์ระดับชาติ/นานาชาติ",
+        targetRaw: ">2 เรื่อง/ปี",
+        targetVal: 2,
+        direction: "higher_better",
+        unit: "เรื่อง",
+        history: { 2565: 8, 2566: 5, 2567: 10, 2568: 6 },
+        owner: "หนง.วิจัยและสารสนเทศ"
+      },
+      {
+        id: "LMKPI009",
+        kpiNo: "KPI 9",
+        process: "3. การบริหารจัดการสู่ความเป็นเลิศ",
+        subProcess: "3.4 การบริหารทรัพยากรบุคคล",
+        name: "ร้อยละของบุคลากรที่มีขีดความสามารถสูง (HiPo)",
+        targetRaw: "≥10%",
+        targetVal: 10,
+        direction: "higher_better",
+        unit: "%",
+        history: { 2565: null, 2566: 10.78, 2567: 10.88, 2568: 10.45 },
+        owner: "หนง.HR"
+      },
+      {
+        id: "LMKPI010",
+        kpiNo: "KPI 10",
+        process: "3. การบริหารจัดการสู่ความเป็นเลิศ",
+        subProcess: "3.4 การบริหารทรัพยากรบุคคล",
+        name: "อัตราความพึงพอใจในการทำงานของบุคลากรฝ่ายการพยาบาล",
+        targetRaw: "≥75%",
+        targetVal: 75,
+        direction: "higher_better",
+        unit: "%",
+        history: { 2565: 75.0, 2566: 76.0, 2567: 77.0, 2568: 76.6 },
+        owner: "หนง.HR"
+      },
+      {
+        id: "LMKPI011",
+        kpiNo: "KPI 11",
+        process: "3. การบริหารจัดการสู่ความเป็นเลิศ",
+        subProcess: "3.4 การบริหารทรัพยากรบุคคล",
+        name: "อัตราความผูกพันของบุคลากรทางการพยาบาลต่อองค์กร",
+        targetRaw: "≥80%",
+        targetVal: 80,
+        direction: "higher_better",
+        unit: "%",
+        history: { 2565: 79.2, 2566: 80.5, 2567: 81.1, 2568: 80.8 },
+        owner: "หนง.HR"
+      },
+      {
+        id: "LMKPI012",
+        kpiNo: "KPI 12",
+        process: "3. การบริหารจัดการสู่ความเป็นเลิศ",
+        subProcess: "3.4 การบริหารทรัพยากรบุคคล",
+        name: "อัตราการลาออก/ไม่ต่อสัญญาของบุคลากรทางการพยาบาล",
+        targetRaw: "<7%",
+        targetVal: 7,
+        direction: "lower_better",
+        unit: "%",
+        history: { 2565: 7.58, 2566: 7.84, 2567: 6.97, 2568: 6.56 },
+        owner: "หนง.HR"
+      },
+      {
+        id: "LMKPI013",
+        kpiNo: "KPI 13",
+        process: "4. การบริหารจัดการสิ่งสนับสนุน",
+        subProcess: "4.1 IT & Information management",
+        name: "อัตราความสำเร็จในการนำระบบสารสนเทศไปใช้จริง/ขยายผล",
+        targetRaw: "≥75%",
+        targetVal: 75,
+        direction: "higher_better",
+        unit: "%",
+        history: { 2565: 82.0, 2566: 90.0, 2567: 90.0, 2568: 90.0 },
+        owner: "หนง.วิจัยและสารสนเทศ"
+      },
+      {
+        id: "LMKPI014",
+        kpiNo: "KPI 14",
+        process: "4. การบริหารจัดการสิ่งสนับสนุน",
+        subProcess: "4.2 พัสดุ & ครุภัณฑ์",
+        name: "อัตราก่อหนี้ผูกพันตามระยะเวลาที่คณะฯ กำหนด",
+        targetRaw: "100%",
+        targetVal: 100,
+        direction: "higher_better",
+        unit: "%",
+        history: { 2565: null, 2566: null, 2567: 100.0, 2568: 100.0 },
+        owner: "รองบริการ"
+      },
+      {
+        id: "LMKPI015",
+        kpiNo: "KPI 15",
+        process: "4. การบริหารจัดการสิ่งสนับสนุน",
+        subProcess: "4.3 การเงิน/งบประมาณ",
+        name: "อัตราการใช้งบประมาณตามเป้าหมายที่กำหนด",
+        targetRaw: "≥80%",
+        targetVal: 80,
+        direction: "higher_better",
+        unit: "%",
+        history: { 2565: null, 2566: null, 2567: null, 2568: 82.5 },
+        owner: "รองบริหาร"
+      },
+      {
+        id: "LMKPI016",
+        kpiNo: "KPI 16",
+        process: "4. การบริหารจัดการสิ่งสนับสนุน",
+        subProcess: "4.4 การสื่อสาร ประชาสัมพันธ์",
+        name: "อัตราความพึงพอใจต่อการสื่อสารนโยบายและการประชาสัมพันธ์",
+        targetRaw: ">80%",
+        targetVal: 80,
+        direction: "higher_better",
+        unit: "%",
+        history: { 2565: 77.6, 2566: 78.4, 2567: 79.4, 2568: 78.8 },
+        owner: "หนง.วิจัยและสารสนเทศ"
+      },
+      {
+        id: "LMKPI017",
+        kpiNo: "KPI 17",
+        process: "5. การวิเคราะห์",
+        subProcess: "5.1 ติดตามการดำเนินการ & ผลลัพธ์",
+        name: "อัตราการนำ KPI ที่ไม่บรรลุเป้าหมายไปจัดทำโครงการพัฒนา",
+        targetRaw: "≥75%",
+        targetVal: 75,
+        direction: "higher_better",
+        unit: "%",
+        history: { 2565: null, 2566: null, 2567: null, 2568: 60.0 },
+        owner: "หัวหน้าฝ่ายฯ"
+      }
+    ];
+
+    // Master Tracking & Governance Dataset for Tab 2
+    const masterSubmissionData = [
+      { id: "SCH001", logicId: "LMKPI001", type: "KPI", name: "ร้อยละความสำเร็จของการนำแผนงานลงสู่การปฏิบัติ", freq: "รายปี", period: "พฤษภาคม 2569", due: "2026-07-17", submit: "2026-07-18", status: "Late", owner: "รองบริหาร" },
+      { id: "SCH002", logicId: "LMKPI002", type: "KPI", name: "บุคลากรถูกร้องเรียนเสี่ยงต่อการฟ้องร้อง", freq: "รายเดือน", period: "มิถุนายน 2569", due: "2026-06-30", submit: "2026-07-23", status: "Late", owner: "ผช.RM" },
+      { id: "SCH003", logicId: "LMKPI002", type: "KPI", name: "บุคลากรถูกร้องเรียนเสี่ยงต่อการฟ้องร้อง", freq: "รายเดือน", period: "กรกฎาคม 2569", due: "2026-07-30", submit: "2026-07-14", status: "On Time", owner: "ผช.RM" },
+      { id: "SCH004", logicId: "LMKPI002", type: "KPI", name: "บุคลากรถูกร้องเรียนเสี่ยงต่อการฟ้องร้อง", freq: "รายเดือน", period: "สิงหาคม 2569", due: "2026-08-31", submit: "2026-07-13", status: "On Time", owner: "ผช.RM" },
+      { id: "SCH005", logicId: "LMKPI002", type: "KPI", name: "บุคลากรถูกร้องเรียนเสี่ยงต่อการฟ้องร้อง", freq: "รายเดือน", period: "กันยายน 2569", due: "2026-09-30", submit: "-", status: "Overdue", owner: "ผช.RM" },
+      { id: "SCH006", logicId: "LMKPI002", type: "KPI", name: "บุคลากรถูกร้องเรียนเสี่ยงต่อการฟ้องร้อง", freq: "รายเดือน", period: "ตุลาคม 2569", due: "2026-10-30", submit: "-", status: "Overdue", owner: "ผช.RM" },
+      { id: "SCH007", logicId: "LMKPI002", type: "KPI", name: "บุคลากรถูกร้องเรียนเสี่ยงต่อการฟ้องร้อง", freq: "รายเดือน", period: "พฤศจิกายน 2569", due: "2026-11-30", submit: "-", status: "Due Soon", owner: "ผช.RM" },
+      { id: "SCH008", logicId: "LMKPI002", type: "KPI", name: "บุคลากรถูกร้องเรียนเสี่ยงต่อการฟ้องร้อง", freq: "รายเดือน", period: "ธันวาคม 2569", due: "2026-12-31", submit: "-", status: "Not Due", owner: "ผช.RM" },
+      { id: "SCH009", logicId: "LMKPI003a", type: "KPI", name: "ความพึงพอใจต่อบริการพยาบาล (IPD)", freq: "ราย 6 เดือน", period: "พฤษภาคม 2569", due: "2026-10-31", submit: "-", status: "Overdue", owner: "รองบริการ" },
+      { id: "SCH011", logicId: "LMKPI003b", type: "KPI", name: "ความพึงพอใจต่อบริการพยาบาล (OPD)", freq: "ราย 6 เดือน", period: "มิถุนายน 2569", due: "2026-06-30", submit: "-", status: "Overdue", owner: "รองบริการ" },
+      { id: "SCH013", logicId: "LMKPI004", type: "KPI", name: "การบรรลุเป้าหมาย 3P Safety Goals", freq: "รายไตรมาส", period: "มิถุนายน 2569", due: "2026-06-30", submit: "-", status: "Overdue", owner: "ผช.RM" },
+      { id: "SCH017", logicId: "LMKPI006", type: "KPI", name: "ผลลัพธ์การพยาบาลผู้ป่วยเฉพาะโรค", freq: "รายปี", period: "กันยายน 2569", due: "2026-09-30", submit: "-", status: "Overdue", owner: "หนง.พัฒนาคุณภาพฯ" },
+      { id: "SCH019", logicId: "LMKPI008", type: "KPI", name: "จำนวนงานวิจัยตีพิมพ์ระดับชาติ/นานาชาติ", freq: "รายปี", period: "กันยายน 2569", due: "2026-09-30", submit: "-", status: "Overdue", owner: "หนง.วิจัยและสารสนเทศ" },
+      { id: "SCH020", logicId: "LMKPI009", type: "KPI", name: "ร้อยละบุคลากรที่มีขีดความสามารถสูง (HiPo)", freq: "รายปี", period: "ตุลาคม 2569", due: "2026-10-31", submit: "-", status: "Overdue", owner: "หนง.HR" },
+      { id: "SCH022", logicId: "LMKPI011", type: "KPI", name: "อัตราความผูกพันของบุคลากรต่อองค์กร", freq: "รายปี", period: "ตุลาคม 2569", due: "2026-10-31", submit: "-", status: "Overdue", owner: "หนง.HR" },
+      { id: "SCH025", logicId: "LMKPI015", type: "KPI", name: "อัตราการใช้งบประมาณตามเป้าหมาย", freq: "รายปี", period: "ธันวาคม 2569", due: "2026-12-31", submit: "-", status: "Not Due", owner: "รองบริหาร" },
+      { id: "SCH030", logicId: "LMPI04", type: "PI", name: "ความคลาดเคลื่อนในการให้ยา (IPD)", freq: "รายเดือน", period: "กันยายน 2569", due: "2026-10-15", submit: "-", status: "Overdue", owner: "ยังไม่ระบุ Owner" },
+      { id: "SCH031", logicId: "LMPI07", type: "PI", name: "อัตราการเกิดแผลกดทับเกิดใหม่ระดับ 2 ขึ้นไป", freq: "รายเดือน", period: "กันยายน 2569", due: "2026-10-15", submit: "-", status: "Overdue", owner: "ยังไม่ระบุ Owner" },
+      { id: "SCH032", logicId: "LMPI08", type: "PI", name: "อัตราการพลัดตก/หกล้มระดับ E ขึ้นไป", freq: "รายเดือน", period: "กันยายน 2569", due: "2026-10-15", submit: "-", status: "Overdue", owner: "ยังไม่ระบุ Owner" }
+    ];
+
+    let currentKPIData = JSON.parse(JSON.stringify(masterKPIData));
+    let currentSubmissionData = JSON.parse(JSON.stringify(masterSubmissionData));
+
+    // Chart instances
+    let chartHR = null;
+    let chartSafety = null;
+    let chartGovStatus = null;
+    let chartOwnerWorkload = null;
+
+    // Toast alert
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      if (msg) toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); }, 3000);
+    }
+
+    // Switch Tabs
+    function switchExecutiveTab(tabId, btnElement) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+      btnElement.classList.add('active');
+      const targetContent = document.getElementById(tabId);
+      targetContent.classList.add('active');
+
+      setTimeout(() => {
+        if (tabId === 'tab1') {
+          if (chartHR) chartHR.resize();
+          if (chartSafety) chartSafety.resize();
+        } else if (tabId === 'tab2') {
+          if (chartGovStatus) chartGovStatus.resize();
+          if (chartOwnerWorkload) chartOwnerWorkload.resize();
+        }
+      }, 50);
+    }
+
+    // ==========================================
+    // 15% THRESHOLD REPORT CARD CALCULATION CORE
+    // ==========================================
+    // Principle:
+    // Green: >= Target (or <= Target for lower_better)
+    // Yellow: within 15% of Target (e.g., Target 80 -> 15% is 12 -> Yellow: 68 <= val < 80)
+    // Red: below 15% limit (< 68)
+    function evaluateReportCardStatus(item, year) {
+      const val = item.history[year];
+
+      if (val === null || val === undefined) {
+        return {
+          status: 'pending',
+          label: 'ไม่มีข้อมูลปีนี้',
+          pillClass: 'pill-status-pending',
+          cardClass: 'status-pending',
+          actualDisplay: '-',
+          bandText: 'ยังไม่มีรอบการประเมินในปีที่เลือก'
+        };
+      }
+
+      if (typeof val === 'string') {
+        return {
+          status: 'pending',
+          label: val,
+          pillClass: 'pill-status-pending',
+          cardClass: 'status-pending',
+          actualDisplay: val,
+          bandText: 'อยู่ระหว่างดำเนินการรวบรวม/วิเคราะห์ผล'
+        };
+      }
+
+      const target = item.targetVal;
+      const tol = target * 0.15; // 15% of target
+
+      if (item.direction === 'higher_better') {
+        const yellowFloor = Number((target - tol).toFixed(2));
+        const bandText = `เกณฑ์: 🟢 ≥ ${target}${item.unit} | 🟡 ${yellowFloor} - ${(target - 0.01).toFixed(2)}${item.unit} | 🔴 < ${yellowFloor}${item.unit}`;
+
+        if (val >= target) {
+          return {
+            status: 'green',
+            label: 'บรรลุตามเป้าหมาย (On Target)',
+            pillClass: 'pill-status-green',
+            cardClass: 'status-green',
+            actualDisplay: `${val} ${item.unit}`,
+            bandText
+          };
+        } else if (val >= yellowFloor) {
+          return {
+            status: 'yellow',
+            label: 'เฝ้าระวัง (Near Target)',
+            pillClass: 'pill-status-yellow',
+            cardClass: 'status-yellow',
+            actualDisplay: `${val} ${item.unit}`,
+            bandText
+          };
+        } else {
+          return {
+            status: 'red',
+            label: 'ต่ำกว่าเกณฑ์ควบคุม (Off Target)',
+            pillClass: 'pill-status-red',
+            cardClass: 'status-red',
+            actualDisplay: `${val} ${item.unit}`,
+            bandText
+          };
+        }
+      } else if (item.direction === 'lower_better') {
+        // Lower is better (e.g. Turnover < 7%)
+        const yellowCeil = Number((target + tol).toFixed(2));
+        const bandText = `เกณฑ์: 🟢 ≤ ${target}${item.unit} | 🟡 ${(target + 0.01).toFixed(2)} - ${yellowCeil}${item.unit} | 🔴 > ${yellowCeil}${item.unit}`;
+
+        if (val <= target) {
+          return {
+            status: 'green',
+            label: 'บรรลุตามเป้าหมาย (ควบคุมได้ดี)',
+            pillClass: 'pill-status-green',
+            cardClass: 'status-green',
+            actualDisplay: `${val} ${item.unit}`,
+            bandText
+          };
+        } else if (val <= yellowCeil) {
+          return {
+            status: 'yellow',
+            label: 'เฝ้าระวัง (ใกล้เกินเกณฑ์)',
+            pillClass: 'pill-status-yellow',
+            cardClass: 'status-yellow',
+            actualDisplay: `${val} ${item.unit}`,
+            bandText
+          };
+        } else {
+          return {
+            status: 'red',
+            label: 'เกินเกณฑ์ควบคุม (Off Target)',
+            pillClass: 'pill-status-red',
+            cardClass: 'status-red',
+            actualDisplay: `${val} ${item.unit}`,
+            bandText
+          };
+        }
+      } else {
+        // exact 0 (such as complaint 0)
+        const isGreen = val === 0;
+        return {
+          status: isGreen ? 'green' : 'red',
+          label: isGreen ? 'บรรลุตามเป้าหมาย (0 ราย)' : 'ไม่เป็นไปตามเป้าหมาย',
+          pillClass: isGreen ? 'pill-status-green' : 'pill-status-red',
+          cardClass: isGreen ? 'status-green' : 'status-red',
+          actualDisplay: `${val} ${item.unit}`,
+          bandText: `เกณฑ์: 🟢 = 0 ${item.unit} | 🔴 > 0 ${item.unit}`
+        };
+      }
+    }
+
+    // Populate KPI Dropdown based on Core Process
+    function populateKPIDropdown() {
+      const selectedProcess = document.getElementById('filterCoreProcess').value;
+      const kpiSelect = document.getElementById('filterKPI');
+      kpiSelect.innerHTML = '<option value="ALL">-- แสดงทุกตัวชี้วัดผลลัพธ์ --</option>';
+
+      currentKPIData.forEach(item => {
+        if (selectedProcess === 'ALL' || item.process.includes(selectedProcess)) {
+          const opt = document.createElement('option');
+          opt.value = item.id;
+          opt.innerText = `${item.kpiNo}: ${item.name.substring(0, 48)}...`;
+          kpiSelect.appendChild(opt);
+        }
+      });
+    }
+
+    function onCoreProcessChange() {
+      populateKPIDropdown();
+      applyTab1Filters();
+    }
+
+    // Apply Filters and Render Report Cards
+    function applyTab1Filters() {
+      const selectedProcess = document.getElementById('filterCoreProcess').value;
+      const selectedKPI = document.getElementById('filterKPI').value;
+      const selectedYear = document.getElementById('filterYear').value;
+
+      let filtered = currentKPIData.filter(item => {
+        const matchProcess = (selectedProcess === 'ALL') || item.process.includes(selectedProcess);
+        const matchKPI = (selectedKPI === 'ALL') || (item.id === selectedKPI);
+        return matchProcess && matchKPI;
+      });
+
+      // Update Filter Result Counter Text
+      document.getElementById('filterCounterText').innerText = 
+        `กำลังแสดง ${filtered.length} ตัวชี้วัด | ข้อมูลปี ${selectedYear}`;
+
+      // Render Cards
+      const grid = document.getElementById('reportCardGrid');
+      grid.innerHTML = '';
+
+      let greenCount = 0;
+      let yellowCount = 0;
+      let redCount = 0;
+      let pendingCount = 0;
+
+      filtered.forEach(item => {
+        const evalResult = evaluateReportCardStatus(item, selectedYear);
+
+        if (evalResult.status === 'green') greenCount++;
+        else if (evalResult.status === 'yellow') yellowCount++;
+        else if (evalResult.status === 'red') redCount++;
+        else pendingCount++;
+
+        const card = document.createElement('div');
+        card.className = `report-card ${evalResult.cardClass}`;
+        card.innerHTML = `
+          <div>
+            <div class="card-top-row">
+              <span class="card-logic-id">${item.kpiNo} (${item.id})</span>
+              <span class="card-owner-badge">👤 ${item.owner}</span>
+            </div>
+            <div class="card-process-badge">
+              <span>📂 ${item.subProcess}</span>
+            </div>
+            <h4 class="card-kpi-title">${item.name}</h4>
+          </div>
+
+          <div>
+            <div class="card-metric-block">
+              <div class="card-metric-actual">
+                <span class="card-actual-label">ผลลัพธ์ปี ${selectedYear}</span>
+                <span class="card-actual-value">${evalResult.actualDisplay}</span>
+              </div>
+              <div class="card-metric-target">
+                <span class="card-target-badge">${item.targetRaw}</span>
+                <span class="card-target-label">เป้าหมายที่กำหนด</span>
+              </div>
+            </div>
+
+            <div class="card-band-breakdown">
+              <strong>ความทนทาน 15%:</strong> ${evalResult.bandText}
+            </div>
+
+            <div class="card-footer-status">
+              <span class="traffic-pill ${evalResult.pillClass}">● ${evalResult.label}</span>
+              <span style="color: var(--text-muted); font-size: 0.72rem;">รอบรายงาน: รายปี</span>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      // Update Summary Counter Cards
+      const total = filtered.length;
+      document.getElementById('cntTotal').innerText = total;
+      document.getElementById('cntGreen').innerText = greenCount;
+      document.getElementById('cntYellow').innerText = yellowCount;
+      document.getElementById('cntRed').innerText = redCount;
+
+      document.getElementById('pctGreen').innerText = total > 0 ? `${((greenCount / total) * 100).toFixed(1)}% บรรลุเกณฑ์เขียว` : '0%';
+      document.getElementById('pctYellow').innerText = total > 0 ? `${((yellowCount / total) * 100).toFixed(1)}% อยู่ในเกณฑ์ 15%` : '0%';
+      document.getElementById('pctRed').innerText = total > 0 ? `${((redCount / total) * 100).toFixed(1)}% ต้องเร่งรัด` : '0%';
+    }
+
+    // ==========================================
+    // TAB 2: GOVERNANCE & TIMELINESS FILTERING
+    // ==========================================
+    function applyOwnerFilter() {
+      const selectedOwner = document.getElementById('ownerFilterSelect').value;
+      let filtered = [];
+
+      if (selectedOwner === 'ALL') {
+        filtered = currentSubmissionData;
+      } else if (selectedOwner === 'UNASSIGNED') {
+        filtered = currentSubmissionData.filter(d => d.owner.includes('ยังไม่ระบุ'));
+      } else {
+        filtered = currentSubmissionData.filter(d => d.owner.includes(selectedOwner));
+      }
+
+      document.getElementById('filterResultNotice').innerText = 
+        `แสดงข้อมูล ${filtered.length} รายการ (จากทั้งหมด ${currentSubmissionData.length} รายการในระบบ)`;
+
+      const total = filtered.length;
+      const onTime = filtered.filter(d => d.status === 'On Time').length;
+      const overdue = filtered.filter(d => d.status === 'Overdue').length;
+      const late = filtered.filter(d => d.status === 'Late').length;
+      const dueSoon = filtered.filter(d => d.status === 'Due Soon').length;
+
+      document.getElementById('trackCardTotal').innerText = `${total} รายการ`;
+      document.getElementById('trackCardTotalSub').innerText = selectedOwner === 'ALL' ? 'ครอบคลุมทุกฝ่าย/หน่วยงาน' : `เฉพาะผู้รับผิดชอบ: ${selectedOwner}`;
+      
+      const onTimePct = total > 0 ? ((onTime / total) * 100).toFixed(1) : 0;
+      document.getElementById('trackCardOnTime').innerText = `${onTime} รายการ (${onTimePct}%)`;
+
+      const overduePct = total > 0 ? ((overdue / total) * 100).toFixed(1) : 0;
+      document.getElementById('trackCardOverdue').innerText = `${overdue} รายการ (${overduePct}%)`;
+
+      document.getElementById('trackCardLate').innerText = `${late + dueSoon} รายการ`;
+
+      const subTbody = document.getElementById('filteredSubmissionTableBody');
+      subTbody.innerHTML = '';
+      if (filtered.length === 0) {
+        subTbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 2rem;">ไม่พบข้อมูลรายการติดตามสำหรับ Owner ที่เลือก</td></tr>`;
+      } else {
+        filtered.forEach(s => {
+          const tr = document.createElement('tr');
+          let badgeClass = 'badge-notdue';
+          if (s.status === 'On Time') badgeClass = 'badge-ontime';
+          else if (s.status === 'Late') badgeClass = 'badge-late';
+          else if (s.status === 'Overdue') badgeClass = 'badge-overdue';
+          else if (s.status === 'Due Soon') badgeClass = 'badge-duesoon';
+
+          tr.innerHTML = `
+            <td><code>${s.id}</code></td>
+            <td><strong>${s.logicId}</strong></td>
+            <td><span style="font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; font-weight: 600;">${s.type}</span></td>
+            <td>${s.name}</td>
+            <td>${s.freq}</td>
+            <td>${s.period}</td>
+            <td>${s.due}</td>
+            <td>${s.submit}</td>
+            <td><span class="badge ${badgeClass}">${s.status}</span></td>
+            <td><strong>${s.owner}</strong></td>
+          `;
+          subTbody.appendChild(tr);
+        });
+      }
+
+      updateGovernanceDoughnut(onTime, late, overdue, dueSoon, filtered.filter(d => d.status === 'Not Due').length);
+    }
+
+    // Charts Initializers
+    function initTab1Charts() {
+      const ctxHR = document.getElementById('hrTrendChart').getContext('2d');
+      if (chartHR) chartHR.destroy();
+      chartHR = new Chart(ctxHR, {
+        type: 'line',
+        data: {
+          labels: ['ปี 2565', 'ปี 2566', 'ปี 2567', 'ปี 2568', 'ปี 2569 (เป้าหมาย)'],
+          datasets: [
+            {
+              label: 'อัตราความผูกพันต่อองค์กร (%)',
+              data: [79.2, 80.5, 81.1, 80.8, 81.5],
+              borderColor: '#0284c7',
+              backgroundColor: 'rgba(2, 132, 199, 0.08)',
+              fill: true,
+              tension: 0.3,
+              pointRadius: 5
+            },
+            {
+              label: 'อัตราความพึงพอใจในการทำงาน (%)',
+              data: [75.0, 76.0, 77.0, 76.6, 77.0],
+              borderColor: '#10b981',
+              borderDash: [5, 5],
+              tension: 0.3,
+              pointRadius: 4
+            },
+            {
+              label: 'อัตราการลาออก/ไม่ต่อสัญญา (%)',
+              data: [7.58, 7.84, 6.97, 6.56, 6.20],
+              borderColor: '#ef4444',
+              tension: 0.3,
+              pointRadius: 5
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'top', labels: { font: { family: 'Sarabun' } } } },
+          scales: { y: { beginAtZero: false } }
+        }
+      });
+
+      const ctxSafety = document.getElementById('safetyTrendChart').getContext('2d');
+      if (chartSafety) chartSafety.destroy();
+      chartSafety = new Chart(ctxSafety, {
+        type: 'bar',
+        data: {
+          labels: ['ปี 2565', 'ปี 2566', 'ปี 2567', 'ปี 2568'],
+          datasets: [
+            {
+              label: 'แผลกดทับเกิดใหม่ (ครั้ง/1,000 วันนอน)',
+              data: [1.18, 1.01, 0.86, 0.88],
+              backgroundColor: '#38bdf8'
+            },
+            {
+              label: 'ความคลาดเคลื่อนทางยา E+ (x10)',
+              data: [0.62, 0.72, 0.42, 0.32],
+              backgroundColor: '#f59e0b'
+            },
+            {
+              label: 'พลัดตกหกล้มระดับ E+ IPD (x10)',
+              data: [0.50, 0.45, 0.38, 0.41],
+              backgroundColor: '#a855f7'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'top', labels: { font: { family: 'Sarabun' } } } },
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+    }
+
+    function initTab2Charts() {
+      const ctxWorkload = document.getElementById('ownerWorkloadChart').getContext('2d');
+      if (chartOwnerWorkload) chartOwnerWorkload.destroy();
+      chartOwnerWorkload = new Chart(ctxWorkload, {
+        type: 'bar',
+        data: {
+          labels: ['ผช.RM', 'รองบริการ', 'รองบริหาร', 'หนง.HR', 'หนง.คุณภาพ', 'วิจัย/สารสนเทศ', 'ยังไม่ระบุ'],
+          datasets: [
+            {
+              label: 'ส่งตรงเวลา (On Time)',
+              data: [2, 0, 0, 0, 0, 0, 0],
+              backgroundColor: '#10b981'
+            },
+            {
+              label: 'ค้างส่ง / ล่าช้า (Overdue/Late)',
+              data: [4, 2, 1, 2, 1, 1, 3],
+              backgroundColor: '#ef4444'
+            },
+            {
+              label: 'ยังไม่ถึงกำหนด (Not Due/Soon)',
+              data: [2, 0, 1, 0, 0, 0, 0],
+              backgroundColor: '#0284c7'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'top', labels: { font: { family: 'Sarabun' } } } },
+          scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } }
+        }
+      });
+    }
+
+    function updateGovernanceDoughnut(onTime, late, overdue, dueSoon, notDue) {
+      const ctxGov = document.getElementById('governanceStatusChart').getContext('2d');
+      if (chartGovStatus) chartGovStatus.destroy();
+      chartGovStatus = new Chart(ctxGov, {
+        type: 'doughnut',
+        data: {
+          labels: ['ตรงเวลา (On Time)', 'ส่งล่าช้า (Late)', 'ค้างส่ง (Overdue)', 'ใกล้ถึงกำหนด (Due Soon)', 'ยังไม่ถึงกำหนด (Not Due)'],
+          datasets: [{
+            data: [onTime, late, overdue, dueSoon, notDue],
+            backgroundColor: ['#10b981', '#fca5a5', '#b91c1c', '#f59e0b', '#0284c7']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'right', labels: { font: { family: 'Sarabun', size: 11 } } }
+          }
+        }
+      });
+    }
+
+    // Sample CSV Download
+    function downloadSampleCSV() {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "Type,Logic_ID,KPI_No,Process,Name,Target,Val_2565,Val_2566,Val_2567,Val_2568,Owner\n";
+      currentKPIData.forEach(k => {
+        csvContent += `Outcome_KPI,${k.id},${k.kpiNo},"${k.process}","${k.name}","${k.targetRaw}",${k.history[2565]},${k.history[2566]},${k.history[2567]},${k.history[2568]},"${k.owner}"\n`;
+      });
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "siriraj_nursing_logic_model_report_cards.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // CSV Upload & Refresh
+    function handleCSVUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        showToast("✅ นำเข้าข้อมูลสำเร็จ! ระบบคำนวณ Report Card และสถิติใหม่เรียบร้อยแล้ว");
+        event.target.value = '';
+      };
+      reader.readAsText(file);
+    }
+
+    // Reset to Baseline
+    function resetToBaseline() {
+      currentKPIData = JSON.parse(JSON.stringify(masterKPIData));
+      currentSubmissionData = JSON.parse(JSON.stringify(masterSubmissionData));
+      document.getElementById('filterCoreProcess').value = 'ALL';
+      document.getElementById('filterYear').value = '2568';
+      document.getElementById('ownerFilterSelect').value = 'ALL';
+      populateKPIDropdown();
+      applyTab1Filters();
+      applyOwnerFilter();
+      initTab1Charts();
+      initTab2Charts();
+      showToast("🔄 รีเซ็ตข้อมูลกลับสู่สถานะมาตรฐานเรียบร้อยแล้ว");
+    }
+
+    // Initialize application
+    window.addEventListener('DOMContentLoaded', () => {
+      populateKPIDropdown();
+      applyTab1Filters();
+      initTab1Charts();
+      initTab2Charts();
+      applyOwnerFilter();
+    });
+  </script>
+</body>
+</html>
